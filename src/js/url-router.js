@@ -22,10 +22,10 @@ const urlRoutes = {
 		title: "Home | " + urlPageTitle,
 		description: "This is the home page",
 	},
-	"/about": {
-		template: "/templates/about.html",
-		title: "About Us | " + urlPageTitle,
-		description: "This is the about page",
+	"/collection": {
+		template: "/templates/collection.html",
+		title: "Collection | " + urlPageTitle,
+		description: "This is the collection page",
 	},
 	"/login": {
 		template: "/templates/login.html",
@@ -37,6 +37,11 @@ const urlRoutes = {
 		title: "Form | " + urlPageTitle,
 		description: "This is the form page",
 	},
+	"/viewer": {
+		template: "/templates/viewer.html",
+		title: "Viewer | " + urlPageTitle,
+		description: "This is the viewer page",
+	},	
 };
 
 // create a function that watches the url and calls the urlLocationHandler
