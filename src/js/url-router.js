@@ -32,6 +32,11 @@ const urlRoutes = {
 		title: "Login | " + urlPageTitle,
 		description: "This is the login page",
 	},
+	"/form": {
+		template: "/templates/form.html",
+		title: "Form | " + urlPageTitle,
+		description: "This is the form page",
+	},
 };
 
 // create a function that watches the url and calls the urlLocationHandler
