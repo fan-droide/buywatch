@@ -7,6 +7,10 @@
 
 `npm i`
 
-`npm start`
+`npx platformatic db migrations apply`
+
+`npx platformatic db seed seed.js`
+
+`npm run dev`
 
 `http://localhost:8080/`

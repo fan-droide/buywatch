@@ -9,7 +9,8 @@
     "startCommand": "npm start"
   },
   "scripts": {
-    "start": "vite",
+    "dev": "npm start",
+    "start": "vite & platformatic db start",
     "build": "vite build",
     "test": "npm run build"
   },
