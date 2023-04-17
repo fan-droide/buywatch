@@ -10,6 +10,33 @@ document.addEventListener("click", (e) => {
 	urlRoute();
 });
 
+const loadScript = (FILE_URL, async = true, type = "module") => {
+    return new Promise((resolve, reject) => {
+        try {
+            const scriptEle = document.createElement("script");
+            scriptEle.type = type;
+            scriptEle.async = async;
+            scriptEle.src =FILE_URL;
+
+            scriptEle.addEventListener("load", (ev) => {
+                resolve({ status: true });
+            });
+
+            scriptEle.addEventListener("error", (ev) => {
+                reject({
+                    status: false,
+                    message: `Failed to load the script ＄{FILE_URL}`
+                });
+            });
+
+            document.body.appendChild(scriptEle);
+        } catch (error) {
+            reject(error);
+        }
+    });
+};
+
+
 // create an object that maps the url to the template, title, and description
 const urlRoutes = {
 	404: {
@@ -26,6 +53,7 @@ const urlRoutes = {
 		template: "/templates/collection.html",
 		title: "Collection | " + urlPageTitle,
 		description: "This is the collection page",
+		src: "./js/collection.js",
 	},
 	"/login": {
 		template: "/templates/login.html",
@@ -72,6 +100,17 @@ const urlLocationHandler = async () => {
 	document
 		.querySelector('meta[name="description"]')
 		.setAttribute("content", route.description);
+	if(route.src){
+		loadScript(route.src)
+		.then( data  => {
+			console.log("Script loaded successfully", data);
+			
+		})
+		.catch( err => {
+			console.error(err);
+		});
+	}
+	
 };
 
 // add an event listener to the window that watches for url changes
