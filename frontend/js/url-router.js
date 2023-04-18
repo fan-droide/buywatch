@@ -64,6 +64,7 @@ const urlRoutes = {
 		template: "/templates/form.html",
 		title: "Form | " + urlPageTitle,
 		description: "This is the form page",
+		src: "./js/form.js",
 	},
 	"/viewer": {
 		template: "/templates/viewer.html",

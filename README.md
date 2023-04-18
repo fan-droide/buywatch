@@ -35,3 +35,57 @@ VITE_PUBLIC_GRAPHQL_API_ENDPOINT=http://127.0.0.1:3042/graphql
 
 ## More info about Platformatic:
 https://oss.platformatic.dev/docs/getting-started/movie-quotes-app-tutorial/
+
+
+## TEST Queries
+
+```
+curl --request POST --header "Content-Type: application/json" \
+  -d "{ \"name\": \"Toto, I've got a feeling we're not in Kansas anymore.\", \"episodeNumber\": \"1\", \"creativeWorkSeason\": \"1\", \"price\": \"0.1\", \"copyrightHolderWebid\": \"https://fandroide.solidcommunity.net\" }" \
+  http://localhost:3042/tvepisodes
+
+
+
+mutation {
+  saveTvseries(input: { name: "The Wizard of Oz", price:"12.5", copyrightHolderWebid:"https://fandroide.solidcommunity.net" }) {
+    id
+  }
+}
+
+mutation {
+  saveTvepisode(input: { id: 1, tvserieId: 1 }) {
+    id
+    name
+    episodeNumber
+    creativeWorkSeason
+    datePublished
+    copyrightHolderWebid
+    price
+    tvserie {
+      id
+      name
+      price
+      copyrightHolderWebid
+    }
+  }
+}
+
+
+query {
+  tvepisodes {
+    id
+    name
+    episodeNumber
+    creativeWorkSeason
+    datePublished
+    copyrightHolderWebid
+    price
+    tvserie {
+      id
+      name
+      price
+      copyrightHolderWebid
+    }
+  }
+}
+```

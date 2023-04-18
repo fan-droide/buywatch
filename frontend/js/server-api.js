@@ -1,8 +1,8 @@
-import { createClient } from '@urql/core';
+import { createClient, gql } from '@urql/core';
 
 const graphqlClient = createClient({
-  url: "http://127.0.0.1:3042/graphql",
-  requestPolicy: "network-only"
+    url: "http://127.0.0.1:3042/graphql",
+    requestPolicy: "network-only"
 });
 
 async function graphqlClientWrapper(method, gqlQuery, queryVariables = {}) {
@@ -21,13 +21,62 @@ async function graphqlClientWrapper(method, gqlQuery, queryVariables = {}) {
     };
 }
 
-export const quotesApi = {
+async function getTVserieId(serieName) {
+    serieName = serieName.trim()
+
+    let serieId = null
+
+    // Check if a movie already exists with the provided name.
+    const queryTVseriesResult = await tvepisodesApi.query(
+        gql`
+        query ($serieName: String!) {
+          tvseries(where: { name: { eq: $serieName } }) {
+            id
+          }
+        }
+      `,
+        { serieName }
+    )
+
+    if (queryTVseriesResult.error) {
+        return null
+    }
+
+    const serieExists = queryTVseriesResult.data?.tvseries.length === 1
+    if (serieExists) {
+        serieId = queryTVseriesResult.data.tvseries[0].id
+    } else {
+        // Create a new tvserie entity record.
+        const saveTVserieResult = await tvepisodesApi.mutation(
+            gql`
+          mutation ($serieName: String!) {
+            saveMovie(input: { name: $serieName }) {
+              id
+            }
+          }
+        `,
+            { serieName }
+        )
+
+        if (saveTVserieResult.error) {
+            return null
+        }
+
+        serieId = saveTVserieResult.data?.saveTVserie.id
+    }
+
+    return serieId
+}
+
+
+export const tvepisodesApi = {
     async query(gqlQuery, queryVariables = {}) {
         return await graphqlClientWrapper("query", gqlQuery, queryVariables);
     },
     async mutation(gqlQuery, queryVariables = {}) {
         return await graphqlClientWrapper("mutation", gqlQuery, queryVariables);
-    }
+    },
+    getTVserieId
 }
 
 
