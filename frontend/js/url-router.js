@@ -70,6 +70,7 @@ const urlRoutes = {
 		template: "/templates/viewer.html",
 		title: "Viewer | " + urlPageTitle,
 		description: "This is the viewer page",
+		src: "./js/viewer.js",
 	},	
 };
 
