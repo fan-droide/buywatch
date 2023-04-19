@@ -1,39 +1,35 @@
 import { tvepisodesApi, gql } from './server-api.js'
 export async function sendFormData(form) {
-    let saveError = false;
+    let saveError = false
     const formData = new FormData(form)
 
-    // for (const [key, value] of formData) {
-    //     console.log(`${key}: ${value}\n`)
-    // }
-    const tvserieId = await tvepisodesApi.getTVserieId("Jaws")
-    console.log(tvserieId)
+    const tvseriePrice = '12.4'
+    const tvserieId = await tvepisodesApi.getTVserieId(formData.get('partof'), tvseriePrice, formData.get('ownerwebid'))
     if (tvserieId) {
         const tvepisode = {
-            name: "Paco",
-            price: "10.0",
+            name: formData.get('filename'),
+            price: formData.get('price'),
             episodeNumber:1, 
             creativeWorkSeason:2, 
-            copyrightHolderWebid:"https://fandroide.solidcommunity.net/", 
+            copyrightHolderWebid:formData.get('ownerwebid'), 
             tvserieId,
-        };
-        console.log(tvepisode)
+        }        
         const { error } = await tvepisodesApi.mutation(gql`
           mutation($tvepisode: TvepisodeInput!) {
             saveTvepisode(input: $tvepisode) {
               id
             }
           }
-        `, { tvepisode });
+        `, { tvepisode })
 
         if (!error) {
-            return { ok: true };
+            return { ok: true }
         } else {
-            saveError = true;
+            saveError = true
         }
     } else {
-        saveError = true;
+        saveError = true
     }
-    return { error: saveError };
+    return { error: saveError }
 
 }
