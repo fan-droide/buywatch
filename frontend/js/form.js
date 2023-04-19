@@ -10,14 +10,15 @@ import { sendFormData } from './request-utils.js'
     // Loop over them and prevent submission
     Array.from(forms).forEach(form => {
       form.addEventListener('submit', async (event) => {
-        if (!form.checkValidity()) {
-          event.preventDefault()
-          event.stopPropagation()
-        } else {
+        event.preventDefault()
+        event.stopPropagation()
+        if (form.checkValidity()) {       
           event.preventDefault()
           event.stopPropagation()
           const sendForm = await sendFormData(form)
-          console.log(sendForm)     
+          if(sendForm.ok){
+            window.location.href = '/viewer'
+          }
         }
   
         form.classList.add('was-validated')

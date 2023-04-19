@@ -1,6 +1,6 @@
-import { quotesApi, gql } from './server-api.js';
+import { tvepisodesApi, gql } from './server-api.js';
 
-const { data } = await quotesApi.query(gql`
+const { data } = await tvepisodesApi.query(gql`
   query {
     tvepisodes {
       id
