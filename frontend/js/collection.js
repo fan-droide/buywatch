@@ -1,0 +1,24 @@
+import { tvepisodesApi, gql } from './server-api.js';
+
+const { data } = await tvepisodesApi.query(gql`
+  query {
+    tvepisodes {
+      id
+      name
+      episodeNumber
+      creativeWorkSeason
+      datePublished
+      copyrightHolderWebid
+      price
+      tvserie {
+        id
+        name
+        price
+        copyrightHolderWebid
+      }
+  }
+  }
+`);
+
+const tvepisodes = data?.tvepisodes || [];
+console.log(tvepisodes)

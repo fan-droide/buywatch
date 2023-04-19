@@ -16,7 +16,10 @@
   },
   "dependencies": {
     "@popperjs/core": "^2.11.7",
-    "bootstrap": "^5.2.3"
+    "@urql/core": "^3.0.3",
+    "bootstrap": "^5.2.3",
+    "graphql": "^16.6.0",
+    "platformatic": "^0.20.1"
   },
   "devDependencies": {
     "sass": "^1.60.0",
